@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 import { IUser } from "./user.interface";
 import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -13,16 +13,25 @@ export class UserService{
   }
 
   getUserId(id: number): IUser {
-    const user = this.users.find(t => t.id === +id)
+    const user = this.users.find(user => user.id === +id)
     if(!user) {
       throw new NotFoundUserException();
     }
     return user
   }
   
-  createUser({user, tags, status}: CreateUserDto): IUser {
-    const newUser = new User(user, tags, status)
+  createUser({user, email, tags, status}: CreateUserDto): IUser {
+    const newUser = new User(user, email, tags, status)
     this.users.push(newUser);
     return newUser;
+  }
+
+  getUserByEmail(email: string): IUser[] {
+    const users = this.users.filter(user => user.email === email);
+    if(!users || users.length === 0) {
+      throw new BadRequestException('User не была найдена')
+    }
+
+    return users
   }
 }

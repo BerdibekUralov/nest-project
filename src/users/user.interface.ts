@@ -11,6 +11,7 @@ export interface IUser {
   user: string;
   status: Status;
   tags: string[];
+  email: string;
   createdAt: Date;
   updatedAt: Date; 
 }

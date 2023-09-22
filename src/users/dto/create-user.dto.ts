@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { ArrayNotEmpty, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Status } from "../user.interface";
 
 export class CreateUserDto {
@@ -13,4 +13,8 @@ export class CreateUserDto {
   @IsOptional()
   @IsEnum(Status, {message: 'Не верный тип статуса'})
   status?: Status;
+
+  @IsOptional()
+  @IsEmail({}, {message: 'Некоррекный email'})
+  email: string
 }

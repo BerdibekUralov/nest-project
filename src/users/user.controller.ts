@@ -2,6 +2,7 @@ import { Body, Controller, Get,  Param, Post, UsePipes, ValidationPipe, ParseInt
 import { IUser } from "./user.interface";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { EmailPipe } from "./pipes/email.pipe";
 
 @Controller('user')
 export class UserController {
@@ -20,5 +21,10 @@ export class UserController {
   @Post()
   createUser(@Body() user: CreateUserDto): IUser {
     return this.userService.createUser(user);
+  }
+
+  @Get('email/:email')
+  getUserByEmail(@Param('email', EmailPipe) email: string): IUser[] {
+    return this.userService.getUserByEmail(email)
   }
 }
