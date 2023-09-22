@@ -1,4 +1,4 @@
-import { Body, Controller, Get,  Param, Post, UsePipes, ValidationPipe, } from "@nestjs/common";
+import { Body, Controller, Get,  Param, Post, UsePipes, ValidationPipe, ParseIntPipe } from "@nestjs/common";
 import { IUser } from "./user.interface";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -12,7 +12,7 @@ export class UserController {
   }
 
   @Get(':id')
-  getUserId(@Param('id') id: string): IUser {
+  getUserId(@Param('id', ParseIntPipe) id: number): IUser {
     return this.userService.getUserId(id)
   }
 
